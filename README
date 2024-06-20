@@ -103,3 +103,8 @@ This section covers deploying the application to a local Kubernetes cluster usin
      ```
 
 Replace placeholders in the Kubernetes YAML files with actual values specific to your project setup. This README provides instructions for both Docker Compose and Kubernetes deployments using Minikube.
+
+
+
+
+
