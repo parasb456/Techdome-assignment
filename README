@@ -1,0 +1,137 @@
+
+# Multi-Container Application Deployment
+
+This repository contains the necessary components for deploying a multi-container application using Docker Compose and Kubernetes.
+
+## Components
+
+### Backend
+- Repository: [Techdome-backend](https://github.com/Anand-1432/Techdome-backend)
+- Description: This repository contains the backend components of the application.
+
+### Frontend
+- Repository: [Techdome-frontend](https://github.com/Anand-1432/Techdome-frontend)
+- Description: This repository contains the frontend components of the application.
+
+## Installation and Setup
+
+Clone the repositories into your local machine:
+   ```bash
+   git clone https://github.com/Anand-1432/Techdome-backend.git
+   git clone https://github.com/Anand-1432/Techdome-frontend.git
+   ```
+
+
+# Task 2 :  where you build a multi-container application with Dockerfiles for frontend and backend, and using a database container from Docker Hub:
+
+---
+
+# Multi-Container Application Deployment
+
+This repository contains a multi-container application built using Docker Compose. The application consists of frontend, backend, and database components.
+
+## Components
+
+### Backend
+- Here i create a separte Dockerfile for backend service
+- then i build the image of that backend Dockerfile 
+- Navigate to `Techdome-backend` and build the backend Docker image:
+     ```bash
+     docker build -t techdome-backend .
+
+- then push this image to my personal dockerhub 
+
+
+### Frontend
+- Here i create a separte Dockerfile for frontend service
+- then i build the image of that frontend Dockerfile 
+- Navigate to `Techdome-frontend` and build the frontend Docker image:
+     ```bash
+     docker build -t techdome-frontend .
+
+- then push this image to my personal dockerhub 
+
+### Database
+- Docker Hub Image: [mongo](https://hub.docker.com/_/mongo)
+- Description: MongoDB database used by the application.
+
+- Pull the MongoDB image from Docker Hub:
+   ```bash
+   docker pull mongo
+   ```
+
+## Deployment
+
+Use Docker Compose to deploy the multi-container application:
+
+1. Create a `docker-compose.yml` file with the following content:
+
+   ```yaml
+        version: "3.8"
+        services:
+  backend:
+    container_name: "backend_container"
+    image: parasb402/backend3
+    restart: always
+    environment:
+      - PORT=8084
+      - MONGODB_URI=mongodb://mongo_db:27017/techdome_db
+    depends_on:
+      - mongo_db
+
+  mongo_db:
+    container_name: "database_container"
+    image: mongo:latest
+
+  frontend:
+    container_name: "frontend_container"
+    image: parasb402/frontend
+    restart: always
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongo_db
+
+   ```
+
+2. Start the application stack using Docker Compose:
+   ```bash
+   docker-compose up
+   ```
+
+
+# Task 3:  Deploy the application to a local Kubernetes cluster using Minikube
+
+then for deployment i use minikube first i start the minikube and i create my deployment.yaml and service.yaml file
+
+
+
+1. Start Minikube:
+   ```bash
+   minikube start
+   ```
+
+
+### Kubernetes (Minikube)
+
+- Deploy the application using Minikube:
+  ```bash
+  kubectl apply -f deployment.yaml
+  kubectl apply -f service.yaml
+  ```
+
+  Replace `deployment.yaml` and `service.yaml` with the actual filenames of your Kubernetes YAML files that define the deployment and service configurations for your application.
+
+This will create Kubernetes deployments and services for each component of your application.
+
+
+Make sure to replace placeholders such as `<database-image>`, `deployment.yaml`, `service.yaml`, and `<port>` with actual values relevant to your project setup. This README now covers both Docker Compose deployment and Kubernetes deployment using Minikube.
+
+
+
+
+
+
+
+
+
